@@ -1,0 +1,21 @@
+Changes
+MANIFEST
+Makefile.PL
+README
+lib/CatalystX/CRUD/Model/DBIC.pm
+t/00-load.t
+t/boilerplate.t
+t/pod-coverage.t
+t/pod.t
+lib/CatalystX/CRUD/Object/DBIC.pm
+t/01-dbic.t
+t/example.sql
+t/insertdb.pl
+t/lib/MyApp.pm
+t/lib/MyApp/Model/Main.pm
+t/MyDB/Main.pm
+t/MyDB/Main/Artist.pm
+t/MyDB/Main/Cd.pm
+t/MyDB/Main/Track.pm
+
+META.yml                                 Module meta-data (added by MakeMaker)
