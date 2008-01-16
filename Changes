@@ -3,3 +3,8 @@ Revision history for CatalystX-CRUD-Model-DBIC
 0.01    20 Dec 2007
         First version, released on an unsuspecting world.
 
+0.02    16 Jan 2008
+        * bump CXCRUD req version to include Sort::SQL and satisfy testers
+
+
+

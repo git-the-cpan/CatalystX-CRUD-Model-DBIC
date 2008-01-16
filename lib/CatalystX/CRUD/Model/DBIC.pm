@@ -11,7 +11,7 @@ use base qw(
     CatalystX::CRUD::Model::Utils
 );
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 __PACKAGE__->mk_ro_accessors(qw( resultset_opts moniker ));
 __PACKAGE__->config->{object_class} = 'CatalystX::CRUD::Object::DBIC';

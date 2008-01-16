@@ -1,13 +1,13 @@
 --- #YAML:1.0
 name:                CatalystX-CRUD-Model-DBIC
-version:             0.01
+version:             0.02
 abstract:            DBIx::Class CRUD
 license:             ~
 generated_by:        ExtUtils::MakeMaker version 6.36
 distribution_type:   module
 requires:     
     Catalyst::Model::DBIC::Schema: 0
-    CatalystX::CRUD:               0.18
+    CatalystX::CRUD:               0.22
     DBIx::Class:                   0
     Test::More:                    0
 meta-spec:
