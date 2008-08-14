@@ -1,5 +1,5 @@
 package MyApp::Model::Main;
-use base qw/CatalystX::CRUD::Model::DBIC/;
+use base qw( CatalystX::CRUD::Model::DBIC );
 
 __PACKAGE__->config(
     schema_class => 'MyDB::Main',

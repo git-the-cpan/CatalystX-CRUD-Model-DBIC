@@ -1,8 +1,9 @@
 package CatalystX::CRUD::Model::DBIC;
 use strict;
 use warnings;
-
+use Carp;
 use CatalystX::CRUD::Iterator;
+use NEXT;
 
 # @INC order important!
 use base qw(
@@ -11,14 +12,14 @@ use base qw(
     CatalystX::CRUD::Model::Utils
 );
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 __PACKAGE__->mk_ro_accessors(qw( resultset_opts moniker ));
 __PACKAGE__->config->{object_class} = 'CatalystX::CRUD::Object::DBIC';
 
 =head1 NAME
 
-CatalystX::CRUD::Model::DBIC - DBIx::Class CRUD
+CatalystX::CRUD::Model::DBIC - DBIx::Class CRUD **DEPRECATED**
 
 =head1 SYNOPSIS
 
@@ -38,6 +39,8 @@ CatalystX::CRUD::Model::DBIC - DBIx::Class CRUD
  1;
 
 =head1 DESCRIPTION
+
+B<** THIS PACKAGE IS DEPRECATED. See Catalystx::CRUD::ModelAdapter::DBIC instead. **>
 
 CatalystX::CRUD::Model::DBIC is a CatalystX::CRUD implementation for DBIx::Class.
 See the CatalystX::CRUD documentation.
@@ -105,7 +108,17 @@ to the schema()'s new() method.
 
 sub new_object {
     my $self = shift;
-    return $self->schema->resultset( $self->moniker )->new(@_);
+    my $dbic_obj;
+    my $moniker = $self->moniker;
+    eval { $dbic_obj = $self->schema->resultset($moniker)->new(@_) };
+    if ( $@ or !$dbic_obj ) {
+        my $err = defined($dbic_obj) ? $dbic_obj->error : $@;
+        return
+            if $self->throw_error("can't create new $moniker object: $err");
+    }
+
+    # must call SUPER instead of NEXT. Why??
+    return $self->SUPER::new_object( delegate => $dbic_obj );
 }
 
 =head2 fetch( @params )
@@ -116,7 +129,26 @@ sub new_object {
 
 sub fetch {
     my $self = shift;
-    return $self->schema->resultset( $self->moniker )->find(@_);
+    if (@_) {
+        my $moniker = $self->moniker;
+        my $dbic_obj;
+        eval {
+            $dbic_obj
+                = $self->schema->resultset( $self->moniker )->find( {@_} );
+        };
+        if ( $@ or !$dbic_obj ) {
+            my $err = defined($dbic_obj) ? $dbic_obj->error : $@;
+            return
+                if $self->throw_error(
+                        "can't create new $moniker object: $err");
+        }
+
+        # must call SUPER instead of NEXT. Why??
+        return $self->SUPER::new_object( delegate => $dbic_obj );
+    }
+    else {
+        return $self->new_object({});
+    }
 }
 
 =head2 make_query( I<\@field_names> )

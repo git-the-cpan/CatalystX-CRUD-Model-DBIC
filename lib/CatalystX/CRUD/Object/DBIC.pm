@@ -3,11 +3,11 @@ use strict;
 use warnings;
 use base qw( CatalystX::CRUD::Object );
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 NAME
 
-CatalystX::CRUD::Object::DBIC - DBIx::Class implementation of CatalystX::CRUD::Object
+CatalystX::CRUD::Object::DBIC - DBIx::Class implementation of CatalystX::CRUD::Object **DEPRECATED**
 
 =head1 SYNOPSIS
 
@@ -20,6 +20,8 @@ CatalystX::CRUD::Object::DBIC - DBIx::Class implementation of CatalystX::CRUD::O
 
 =head1 DESCRIPTION
 
+B<** THIS PACKAGE IS DEPRECATED. See Catalystx::CRUD::ModelAdapter::DBIC instead. **>
+
 CatalystX::CRUD::Object::DBIC implements the required CRUD methods
 of a CatalystX::CRUD::Object subclass. It is intended for use
 with CatalystX::CRUD::Model::DBIC.
@@ -30,13 +32,13 @@ Only new or overridden methods are documented here.
 
 =head2 create
 
-Calls delegate->create().
+Calls delegate->insert().
 
 =cut
 
 # required methods
 sub create {
-    shift->delegate->create(@_);
+    shift->delegate->insert(@_);
 }
 
 =head2 read

@@ -9,7 +9,7 @@ my $dbh    = $schema->storage->dbh;
 $dbh->do(
     qq{
 CREATE TABLE artist (
-    artistid INTEGER PRIMARY KEY,
+    artistid INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL 
   );}
 ) or die;
@@ -17,7 +17,7 @@ CREATE TABLE artist (
 $dbh->do(
     qq{
 CREATE TABLE cd (
-    cdid INTEGER PRIMARY KEY,
+    cdid INTEGER PRIMARY KEY AUTOINCREMENT,
     artist INTEGER NOT NULL REFERENCES artist(artistid),
     title TEXT NOT NULL
   );
@@ -27,7 +27,7 @@ CREATE TABLE cd (
 $dbh->do(
     qq{
 CREATE TABLE track (
-    trackid INTEGER PRIMARY KEY,
+    trackid INTEGER PRIMARY KEY AUTOINCREMENT,
     cd INTEGER NOT NULL REFERENCES cd(cdid),
     title TEXT NOT NULL
   );
@@ -48,7 +48,7 @@ my %albums = (
 );
 
 my @cds;
-foreach my $lp ( keys %albums ) {
+foreach my $lp ( sort keys %albums ) {
     my $artist
         = $schema->resultset('Artist')->search( { name => $albums{$lp} } );
     push @cds, [ $lp, $artist->first ];
@@ -67,7 +67,7 @@ my %tracks = (
 );
 
 my @tracks;
-foreach my $track ( keys %tracks ) {
+foreach my $track ( sort keys %tracks ) {
     my $cdname
         = $schema->resultset('Cd')->search( { title => $tracks{$track}, } );
     push @tracks, [ $cdname->first, $track ];

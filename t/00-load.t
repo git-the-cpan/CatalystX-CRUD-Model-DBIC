@@ -1,7 +1,7 @@
 #!perl -T
 
 use Test::More tests => 1;
-use lib qw( ../CatalystX-CRUD/lib t );
+use lib qw( ../../CatalystX-CRUD/trunk/lib t );
 
 BEGIN {
 	use_ok( 'CatalystX::CRUD::Model::DBIC' );
